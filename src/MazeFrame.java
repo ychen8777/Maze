@@ -1,12 +1,15 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Rectangle2D;
 
 public class MazeFrame extends JFrame {
 
+    private int blockSize = 8;
     private int mazeHeight;
     private int mazeWidth;
     private MazeControl mazeControl;
     private MazeCanvas mazeCanvas;
+    private MazeData mazeData;
 
     public MazeFrame(String title, int mazeWidth, int mazeHeight) {
         super(title);
@@ -14,9 +17,12 @@ public class MazeFrame extends JFrame {
         this.mazeWidth = mazeWidth;
 
         this.mazeControl = new MazeControl();
-        setContentPane(mazeControl);
+        add(mazeControl, BorderLayout.NORTH);
         this.mazeCanvas = new MazeCanvas();
-        add(mazeCanvas);
+        // JButton testB = new JButton("Test");
+        // mazeCanvas.add(testB);
+        mazeCanvas.setSize(1024, 760);
+        add(mazeCanvas, BorderLayout.SOUTH);
         pack();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,6 +34,12 @@ public class MazeFrame extends JFrame {
     public MazeFrame(String title) {
         this(title, 1024, 768 );
     }
+
+    public void render(MazeData data) {
+        this.mazeData = data;
+        repaint();
+    }
+
 
     public int getInputWidth() {
         return Integer.parseInt(this.mazeControl.getWidthInput());
@@ -90,6 +102,8 @@ public class MazeFrame extends JFrame {
     }
 
     private class MazeCanvas extends JPanel {
+
+
         public MazeCanvas() {
             //double buffer
             super(true);
@@ -99,8 +113,25 @@ public class MazeFrame extends JFrame {
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
 
+            Graphics2D g2d = (Graphics2D)g;
+
+            for (int i = 0; i < mazeData.getM(); i ++) {
+                for (int j = 0; j < mazeData.getN(); j ++) {
+                    if (mazeData.maze[i][j] == MazeData.WALL) {
+                        // set wall color to light blue
+                        MazeVisHelper.setColor(g2d, MazeVisHelper.LightBlue);
+                    } else { // set wall color to white
+                        MazeVisHelper.setColor(g2d, MazeVisHelper.White);
+                    }
+                    // draw the rectangle
+                    MazeVisHelper.fillRectangle(g2d, i*blockSize, j*blockSize, blockSize, blockSize);
+                }
+            }
+
 
         }
+
+
     }
 
 }
