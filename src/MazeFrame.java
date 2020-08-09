@@ -1,10 +1,12 @@
 import javax.swing.*;
+import java.awt.*;
 
 public class MazeFrame extends JFrame {
 
     private int mazeHeight;
     private int mazeWidth;
     private MazeControl mazeControl;
+    private MazeCanvas mazeCanvas;
 
     public MazeFrame(String title, int mazeWidth, int mazeHeight) {
         super(title);
@@ -13,6 +15,8 @@ public class MazeFrame extends JFrame {
 
         this.mazeControl = new MazeControl();
         setContentPane(mazeControl);
+        this.mazeCanvas = new MazeCanvas();
+        add(mazeCanvas);
         pack();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,8 +48,6 @@ public class MazeFrame extends JFrame {
     public JButton getBSFButton() {
         return this.mazeControl.getBSFButton();
     }
-
-
 
 
     private class MazeControl extends JPanel {
@@ -84,6 +86,20 @@ public class MazeFrame extends JFrame {
 
         public JButton getBSFButton() {
             return this.BSFButton;
+        }
+    }
+
+    private class MazeCanvas extends JPanel {
+        public MazeCanvas() {
+            //double buffer
+            super(true);
+        }
+
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+
         }
     }
 
