@@ -7,15 +7,8 @@ public class Main {
         // write your code here
 
         EventQueue.invokeLater(() -> {
-                    MazeData data = new MazeData(75, 101);
-                    MazeFrame window = new MazeFrame("Maze Demo");
-
-
-                    JButton generateMazeButton = window.getGenerateMazeButton();
-
-                    new Thread(() -> {
-                        window.render(data);
-                    }).start();
+                    MazeVisualizer mazeVis = new MazeVisualizer();
+                    mazeVis.run();
                 }
                 );
 
