@@ -20,8 +20,8 @@ public class MazeData {
         this.n = n;
         this.entranceX = 0;
         this.entranceY = 1;
-        this.exitX = n;
-        this.exitY = m - 1;
+        this.exitX = m - 1;
+        this.exitY = n - 2;
 
         this.maze = new char[m][n];
 
@@ -35,8 +35,8 @@ public class MazeData {
             }
         }
 
-        maze[entranceY][entranceX] = ROAD;
-        maze[exitY][exitX] = ROAD;
+        maze[entranceX][entranceY] = ROAD;
+        maze[exitX][exitY] = ROAD;
     }
 
     public int getM() {

@@ -4,35 +4,36 @@ import java.awt.geom.Rectangle2D;
 
 public class MazeFrame extends JFrame {
 
-    private int blockSize = 8;
-    private int mazeHeight;
-    private int mazeWidth;
+    private int blockSize = 9;
+    private int windowHeight;
+    private int windowWidth;
     private MazeControl mazeControl;
     private MazeCanvas mazeCanvas;
     private MazeData mazeData;
 
-    public MazeFrame(String title, int mazeWidth, int mazeHeight) {
+    public MazeFrame(String title, int windowWidth, int windowHeight) {
         super(title);
-        this.mazeHeight = mazeHeight;
-        this.mazeWidth = mazeWidth;
+        this.windowHeight = windowHeight;
+        this.windowWidth = windowWidth;
+        this.setSize(windowWidth, windowHeight);
 
         this.mazeControl = new MazeControl();
         add(mazeControl, BorderLayout.NORTH);
         this.mazeCanvas = new MazeCanvas();
         // JButton testB = new JButton("Test");
         // mazeCanvas.add(testB);
-        mazeCanvas.setSize(1024, 760);
         add(mazeCanvas, BorderLayout.SOUTH);
         pack();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);
+        //System.out.println(mazeControl.getHeight());
 
     }
 
     public MazeFrame(String title) {
-        this(title, 1024, 768 );
+        this(title, 9*101, 75*9+40);
     }
 
     public void render(MazeData data) {
@@ -64,9 +65,9 @@ public class MazeFrame extends JFrame {
 
     private class MazeControl extends JPanel {
         private JLabel widthLabel = new JLabel("Width: ");
-        private JTextField widthField = new JTextField("103");
+        private JTextField widthField = new JTextField("101");
         private JLabel heightLabel = new JLabel("Height:");
-        private JTextField heightField = new JTextField("77");
+        private JTextField heightField = new JTextField("75");
         private JButton generateMazeButton = new JButton("Generate Maze");
         private JButton DFSButton = new JButton("Solve by DFS");
         private JButton BSFButton = new JButton("Solve by BFS");
@@ -127,10 +128,12 @@ public class MazeFrame extends JFrame {
                     MazeVisHelper.fillRectangle(g2d, i*blockSize, j*blockSize, blockSize, blockSize);
                 }
             }
-
-
         }
 
+        @Override
+        public Dimension getPreferredSize(){
+            return new Dimension(windowWidth, windowHeight - 40);
+        }
 
     }
 
