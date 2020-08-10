@@ -7,7 +7,7 @@ public class Main {
         // write your code here
 
         EventQueue.invokeLater(() -> {
-                    MazeData data = new MazeData(101, 75);
+                    MazeData data = new MazeData(75, 101);
                     MazeFrame window = new MazeFrame("Maze Demo");
 
 

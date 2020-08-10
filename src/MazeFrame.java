@@ -125,7 +125,8 @@ public class MazeFrame extends JFrame {
                         MazeVisHelper.setColor(g2d, MazeVisHelper.White);
                     }
                     // draw the rectangle
-                    MazeVisHelper.fillRectangle(g2d, i*blockSize, j*blockSize, blockSize, blockSize);
+                    MazeVisHelper.fillRectangle(g2d, j*blockSize, i*blockSize, blockSize, blockSize);
+
                 }
             }
         }

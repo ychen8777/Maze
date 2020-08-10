@@ -7,8 +7,8 @@ public class MazeData {
     private int m, n;
     public char[][] maze;
 
-    private int entranceX, entranceY;
-    private int exitX, exitY;
+    private int entranceRow, entranceCol;
+    private int exitRow, exitCol;
 
     public MazeData(int m, int n) {
 
@@ -18,10 +18,10 @@ public class MazeData {
 
         this.m = m;
         this.n = n;
-        this.entranceX = 0;
-        this.entranceY = 1;
-        this.exitX = m - 1;
-        this.exitY = n - 2;
+        this.entranceRow = 1;
+        this.entranceCol = 0;
+        this.exitRow = m - 2;
+        this.exitCol = n - 1;
 
         this.maze = new char[m][n];
 
@@ -35,8 +35,8 @@ public class MazeData {
             }
         }
 
-        maze[entranceX][entranceY] = ROAD;
-        maze[exitX][exitY] = ROAD;
+        maze[entranceRow][entranceCol] = ROAD;
+        maze[exitRow][exitCol] = ROAD;
     }
 
     public int getM() {
@@ -47,19 +47,19 @@ public class MazeData {
         return n;
     }
 
-    public int getEntranceX() {
-        return entranceX;
+    public int getEntranceRow() {
+        return entranceRow;
     }
 
-    public int getEntranceY() {
-        return entranceY;
+    public int getEntranceCol() {
+        return entranceCol;
     }
 
-    public int getExitX() {
-        return exitX;
+    public int getExitRow() {
+        return exitRow;
     }
 
-    public int getExitY() {
-        return exitY;
+    public int getExitCol() {
+        return exitCol;
     }
 }
