@@ -17,18 +17,20 @@ public class MazeFrame extends JFrame {
         this.windowWidth = windowWidth;
         this.setSize(windowWidth, windowHeight);
 
+        // control panel width 351, height 101
         this.mazeControl = new MazeControl();
         add(mazeControl, BorderLayout.NORTH);
         this.mazeCanvas = new MazeCanvas();
-        // JButton testB = new JButton("Test");
-        // mazeCanvas.add(testB);
         add(mazeCanvas, BorderLayout.SOUTH);
         pack();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);
-        //System.out.println(mazeControl.getHeight());
+        System.out.println("Control height:");
+        System.out.println(mazeControl.getHeight());
+        System.out.println("Control width:");
+        System.out.println(mazeControl.getWidth());
 
     }
 
@@ -40,6 +42,7 @@ public class MazeFrame extends JFrame {
         this.mazeData = data;
         repaint();
     }
+
 
 
     public int getInputWidth() {
@@ -71,15 +74,43 @@ public class MazeFrame extends JFrame {
         private JButton generateMazeButton = new JButton("Generate Maze");
         private JButton DFSButton = new JButton("Solve by DFS");
         private JButton BSFButton = new JButton("Solve by BFS");
+        private JLabel levelText = new JLabel("Difficulty: ");
+        private JComboBox levelBox;
+        private JLabel mapText = new JLabel("Open Map: ");
+        private JComboBox mapBox;
+
 
         public MazeControl(){
-            this.add(widthLabel);
-            this.add(widthField);
-            this.add(heightLabel);
-            this.add(heightField);
-            this.add(generateMazeButton);
-            this.add(DFSButton);
-            this.add(BSFButton);
+            this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+            JPanel control1 = new JPanel();
+            control1.add(widthLabel);
+            widthField.setColumns(4);
+            widthField.setHorizontalAlignment(JTextField.CENTER);
+            control1.add(widthField);
+            control1.add(heightLabel);
+            heightField.setColumns(4);
+            heightField.setHorizontalAlignment(JTextField.CENTER);
+            control1.add(heightField);
+            this.add(control1);
+
+            JPanel control3 = new JPanel();
+            control3.add(generateMazeButton);
+            control3.add(DFSButton);
+            control3.add(BSFButton);
+            this.add(control3);
+
+            JPanel control2 = new JPanel();
+            String[] levels = {"Easy", "Hard"};
+            this.levelBox = new JComboBox(levels);
+            String[] mapChoice = {"on", "off"};
+            this.mapBox = new JComboBox(mapChoice);
+            control2.add(levelText);
+            control2.add(levelBox);
+            control2.add(mapText);
+            control2.add(mapBox);
+            this.add(control2);
+
         }
 
         public String getWidthInput() {
