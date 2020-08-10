@@ -14,7 +14,7 @@ public class MazeVisHelper {
 
     public static void fillRectangle(Graphics2D g, int x, int y, int width, int height) {
         Rectangle2D rect = new Rectangle2D.Double(x, y, width, height);
-        g.draw(rect);
+        g.fill(rect);
     }
 
     public static void setColor(Graphics2D g, Color color) {
