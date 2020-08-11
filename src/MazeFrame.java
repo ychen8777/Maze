@@ -27,20 +27,42 @@ public class MazeFrame extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);
-        System.out.println("Control height:");
-        System.out.println(mazeControl.getHeight());
-        System.out.println("Control width:");
-        System.out.println(mazeControl.getWidth());
+//        System.out.println("Control height:");
+//        System.out.println(mazeControl.getHeight());
+//        System.out.println("Control width:");
+//        System.out.println(mazeControl.getWidth());
 
     }
 
     public MazeFrame(String title) {
-        this(title, 9*101, 75*9+40);
+        this(title, 9*101, 75*9+101);
     }
 
     public void render(MazeData data) {
         this.mazeData = data;
         repaint();
+    }
+
+    public void resizeWindow(int width, int height){
+        if (width <= 351 && height <= 101) {
+            this.windowWidth = 351;
+            this.windowHeight = 130;
+        }
+        else if (width <= 351) {
+            this.windowWidth = 351;
+            this.windowHeight = height;
+        } else if (height < 101) {
+            this.windowWidth = width;
+            this.windowHeight = 130;
+        } else {
+            this.windowWidth = width;
+            this.windowHeight = height;
+        }
+        this.setSize(windowWidth, windowHeight);
+        this.remove(mazeControl);
+        this.remove(mazeCanvas);
+        this.add(mazeControl, BorderLayout.NORTH);
+        this.add(mazeCanvas, BorderLayout.SOUTH);
     }
 
 
@@ -65,6 +87,9 @@ public class MazeFrame extends JFrame {
         return this.mazeControl.getBSFButton();
     }
 
+    public int getBlockSize() {
+        return blockSize;
+    }
 
     private class MazeControl extends JPanel {
         private JLabel widthLabel = new JLabel("Width: ");
@@ -135,7 +160,6 @@ public class MazeFrame extends JFrame {
 
     private class MazeCanvas extends JPanel {
 
-
         public MazeCanvas() {
             //double buffer
             super(true);
@@ -164,7 +188,7 @@ public class MazeFrame extends JFrame {
 
         @Override
         public Dimension getPreferredSize(){
-            return new Dimension(windowWidth, windowHeight - 40);
+            return new Dimension(windowWidth, windowHeight-101);
         }
 
     }
