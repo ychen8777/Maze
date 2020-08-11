@@ -39,7 +39,7 @@ public class MazeVisualizer {
         int row = this.window.getInputHeight();
         this.data = new MazeData(row, col);
         //System.out.println("row: " + col + ", height: " + row);
-        this.window.resizeWindow(col*this.window.getBlockSize()+16, row*this.window.getBlockSize()+120);
+        this.window.resizeWindow(col*this.window.getBlockSize()+16, row*this.window.getBlockSize()+120+20);
         this.window.render(this.data);
 
     }

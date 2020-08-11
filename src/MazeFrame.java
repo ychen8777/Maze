@@ -16,21 +16,33 @@ public class MazeFrame extends JFrame {
         this.windowHeight = windowHeight;
         this.windowWidth = windowWidth;
         this.setSize(windowWidth, windowHeight);
+        this.setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
 
         // control panel width 351, height 101
         this.mazeControl = new MazeControl();
-        add(mazeControl, BorderLayout.NORTH);
+        //add(mazeControl, BorderLayout.NORTH);
         this.mazeCanvas = new MazeCanvas();
-        add(mazeCanvas, BorderLayout.SOUTH);
+        //add(mazeCanvas, BorderLayout.SOUTH);
+        this.add(mazeControl);
+        this.add(mazeCanvas);
         pack();
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setVisible(true);
+
+        this.windowWidth = (int) this.getSize().getWidth();
+        this.windowHeight = (int) this.getSize().getHeight();
+
 //        System.out.println("Control height:");
 //        System.out.println(mazeControl.getHeight());
 //        System.out.println("Control width:");
 //        System.out.println(mazeControl.getWidth());
+
+//        System.out.println("ori width: ");
+//        System.out.println(this.getSize().getWidth());
+//        System.out.println("ori height: ");
+//        System.out.println(this.getSize().getHeight());
 
     }
 
@@ -44,25 +56,31 @@ public class MazeFrame extends JFrame {
     }
 
     public void resizeWindow(int width, int height){
-        if (width <= 351 && height <= 101) {
-            this.windowWidth = 351;
-            this.windowHeight = 130;
+        if (width <= 385 && height <= 140) {
+            this.windowWidth = 385;
+            this.windowHeight = 140;
         }
-        else if (width <= 351) {
-            this.windowWidth = 351;
+        else if (width <= 385) {
+            this.windowWidth = 385;
             this.windowHeight = height;
-        } else if (height < 101) {
+        } else if (height <= 140) {
             this.windowWidth = width;
-            this.windowHeight = 130;
+            this.windowHeight = 140;
         } else {
             this.windowWidth = width;
             this.windowHeight = height;
         }
+
+//        System.out.println("new width: ");
+//        System.out.println(this.windowWidth);
+//        System.out.println("new height: ");
+//        System.out.println(this.windowHeight);
+
+//        this.remove(mazeControl);
+//        this.remove(mazeCanvas);
         this.setSize(windowWidth, windowHeight);
-        this.remove(mazeControl);
-        this.remove(mazeCanvas);
-        this.add(mazeControl, BorderLayout.NORTH);
-        this.add(mazeCanvas, BorderLayout.SOUTH);
+//        this.add(mazeControl);
+//        this.add(mazeCanvas);
     }
 
 
