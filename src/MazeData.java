@@ -39,6 +39,10 @@ public class MazeData {
         maze[exitRow][exitCol] = ROAD;
     }
 
+    public boolean inArea(int row, int col) {
+        return row >=0 && row < this.m && col >= 0 && col < this.n;
+    }
+
     public int getM() {
         return m;
     }
