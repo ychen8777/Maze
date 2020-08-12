@@ -11,6 +11,8 @@ public class MazeVisHelper {
     public static final Color Green = new Color(0x4CAF50);
     public static final Color Black = new Color(0x000000);
     public static final Color White = new Color(0xFFFFFF);
+    public static final Color Grey = new Color(0x9E9E9E);
+    public static final Color BlueGrey = new Color(0x607D8B);
 
     public static void fillRectangle(Graphics2D g, int x, int y, int width, int height) {
         Rectangle2D rect = new Rectangle2D.Double(x, y, width, height);
@@ -21,7 +23,12 @@ public class MazeVisHelper {
         g.setColor(color);
     }
 
-
-
+    public static void pause(int t) {
+        try{
+            Thread.sleep(t);
+        } catch (InterruptedException e) {
+            System.out.println("Error sleeping");
+        }
+    }
 
 }
