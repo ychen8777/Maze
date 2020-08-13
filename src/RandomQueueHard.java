@@ -1,7 +1,12 @@
 import java.util.LinkedList;
+import java.util.Random;
 
-public class RandomQueue<E> implements MazeQueue<E> {
+public class RandomQueueHard<E> implements MazeQueue<E> {
     private LinkedList<E> queue;
+
+    public RandomQueueHard() {
+        this.queue = new LinkedList<>();
+    }
 
     public void add(E e) {
         // randomly add e to first or last of queue
@@ -14,6 +19,9 @@ public class RandomQueue<E> implements MazeQueue<E> {
     }
 
     public E remove() {
+        if (this.queue.size() == 0) {
+            throw new IllegalArgumentException("There's no element to remove in Random Queue");
+        }
         // randomly remove the first or last e in queue
         double value = Math.random();
         if (value < 0.5) {
