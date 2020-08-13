@@ -13,7 +13,7 @@ public class MazeVisualizer {
 
     public MazeVisualizer() {
         // default setup when running
-        this.data = new MazeData(75, 101);
+        this.data = new MazeData(45, 45);
         this.window = new MazeFrame("Maze Demo");
         this.generateMazeButton = this.window.getGenerateMazeButton();
         this.DFSButton = this.window.getDFSButton();

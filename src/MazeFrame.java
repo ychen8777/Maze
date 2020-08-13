@@ -4,7 +4,7 @@ import java.awt.geom.Rectangle2D;
 
 public class MazeFrame extends JFrame {
 
-    private int blockSize = 9;
+    public static int blockSize = 20;
     private int windowHeight;
     private int windowWidth;
     private MazeControl mazeControl;
@@ -47,7 +47,7 @@ public class MazeFrame extends JFrame {
     }
 
     public MazeFrame(String title) {
-        this(title, 9*101, 75*9+101);
+        this(title, MazeFrame.blockSize*45, 45*MazeFrame.blockSize+101);
     }
 
     public void render(MazeData data) {
@@ -111,9 +111,9 @@ public class MazeFrame extends JFrame {
 
     private class MazeControl extends JPanel {
         private JLabel widthLabel = new JLabel("Width: ");
-        private JTextField widthField = new JTextField("101");
+        private JTextField widthField = new JTextField("45");
         private JLabel heightLabel = new JLabel("Height:");
-        private JTextField heightField = new JTextField("75");
+        private JTextField heightField = new JTextField("45");
         private JButton generateMazeButton = new JButton("Generate Maze");
         private JButton DFSButton = new JButton("Solve by DFS");
         private JButton BSFButton = new JButton("Solve by BFS");
