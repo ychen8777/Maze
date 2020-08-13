@@ -48,6 +48,7 @@ public class MazeVisualizer {
         this.window.resizeWindow(col*this.window.getBlockSize()+16, row*this.window.getBlockSize()+120+20);
         this.window.render(this.data);
         generateHelper();
+        this.window.render(this.data);
 
     }
 
@@ -93,8 +94,8 @@ public class MazeVisualizer {
             this.data.maze[row][col] = MazeData.ROAD;
         }
 
-        this.window.render((this.data));
-        MazeVisHelper.pause(DELAY);
+        //this.window.render((this.data));
+        //MazeVisHelper.pause(DELAY);
 
     }
 
