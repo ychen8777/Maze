@@ -93,6 +93,22 @@ public class MazeFrame extends JFrame {
         return Integer.parseInt(this.mazeControl.getHeightInput());
     }
 
+    public String getDifficulty() {
+        return (String) this.mazeControl.getDifficulty();
+    }
+
+    public String getMapOption() {
+        return (String) this.mazeControl.getMapOption();
+    }
+
+    public JComboBox getLevelBox() {
+        return this.mazeControl.getLevelBox();
+    }
+
+    public JComboBox getMapBox() {
+        return this.mazeControl.getMapBox();
+    }
+
     public JButton getGenerateMazeButton() {
         return this.mazeControl.getGenerateMazeButton();
     }
@@ -104,6 +120,8 @@ public class MazeFrame extends JFrame {
     public JButton getBSFButton() {
         return this.mazeControl.getBSFButton();
     }
+
+
 
     public int getBlockSize() {
         return blockSize;
@@ -163,6 +181,23 @@ public class MazeFrame extends JFrame {
         public String getHeightInput() {
             return this.heightField.getText();
         }
+
+        public String getDifficulty() {
+            return (String) this.levelBox.getSelectedItem();
+        }
+
+        public String getMapOption() {
+            return (String) this.mapBox.getSelectedItem();
+        }
+
+        public JComboBox getLevelBox() {
+            return levelBox;
+        }
+
+        public JComboBox getMapBox() {
+            return mapBox;
+        }
+
         public JButton getGenerateMazeButton() {
             return this.generateMazeButton;
         }
@@ -174,6 +209,8 @@ public class MazeFrame extends JFrame {
         public JButton getBSFButton() {
             return this.BSFButton;
         }
+
+
     }
 
     private class MazeCanvas extends JPanel {
