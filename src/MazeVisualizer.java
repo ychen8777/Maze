@@ -29,12 +29,12 @@ public class MazeVisualizer {
     }
 
     public void run() {
-        new Thread(() -> {
+//        new Thread(() -> {
             this.window.render(this.data);
             this.generateMazeButton.addActionListener((e) -> {
                 generateMaze();
             });
-        }).start();
+//        }).start();
     }
 
 
@@ -47,9 +47,12 @@ public class MazeVisualizer {
         //System.out.println("row: " + col + ", height: " + row);
         this.window.resizeWindow(col*this.window.getBlockSize()+16, row*this.window.getBlockSize()+120+20);
         this.window.render(this.data);
-        generateHelper();
-        this.window.render(this.data);
 
+        new Thread(() -> {
+            generateHelper();
+        }).start();
+
+        //this.window.render(this.data);
     }
 
     public void generateHelper() {
@@ -94,8 +97,8 @@ public class MazeVisualizer {
             this.data.maze[row][col] = MazeData.ROAD;
         }
 
-        //this.window.render((this.data));
-        //MazeVisHelper.pause(DELAY);
+        this.window.render((this.data));
+        MazeVisHelper.pause(DELAY);
 
     }
 
