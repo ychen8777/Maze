@@ -234,6 +234,10 @@ public class MazeFrame extends JFrame {
                     } else { // set wall color to white
                         MazeVisHelper.setColor(g2d, MazeVisHelper.White);
                     }
+                    if (i == mazeData.getEntranceRow() && j == mazeData.getEntranceCol()) {
+                        MazeVisHelper.setColor(g2d, MazeVisHelper.Red);
+                    }
+
                     // draw the rectangle
                     MazeVisHelper.fillRectangle(g2d, j*blockSize, i*blockSize, blockSize, blockSize);
 

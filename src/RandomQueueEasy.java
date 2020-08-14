@@ -17,7 +17,7 @@ public class RandomQueueEasy<E> implements MazeQueue<E> {
         }
         int ranIndex = (int) (Math.random() * this.queue.size());
 
-        System.out.println(ranIndex);
+        //System.out.println(ranIndex);
 
         E item = this.queue.get(ranIndex);
         // replace queue[ranIndex] with the last element
