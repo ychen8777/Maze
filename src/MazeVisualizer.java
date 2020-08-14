@@ -4,11 +4,16 @@ public class MazeVisualizer {
 
     private MazeData data;
     private MazeFrame window;
+
+    private int[][] direction = {{-1,0}, {0, 1}, {1, 0}, {0,-1}};
+    private static int DELAY = 5;
+
+    // control panel
     private JButton generateMazeButton;
     private JButton DFSButton;
     private JButton BFSButton;
-    private int[][] direction = {{-1,0}, {0, 1}, {1, 0}, {0,-1}};
-    private static int DELAY = 5;
+    private JComboBox levelBox;
+    private JComboBox mapBox;
 
 
     public MazeVisualizer() {
@@ -18,6 +23,8 @@ public class MazeVisualizer {
         this.generateMazeButton = this.window.getGenerateMazeButton();
         this.DFSButton = this.window.getDFSButton();
         this.BFSButton = this.window.getBSFButton();
+        this.levelBox = this.window.getLevelBox();
+        this.mapBox = this.window.getMapBox();
     }
 
     public MazeData getData() {
@@ -32,7 +39,8 @@ public class MazeVisualizer {
 //        new Thread(() -> {
             this.window.render(this.data);
             this.generateMazeButton.addActionListener((e) -> {
-                generateMaze();
+                String level = this.window.getDifficulty();
+                generateMaze(level);
             });
 //        }).start();
     }
@@ -40,29 +48,31 @@ public class MazeVisualizer {
 
 
     // to generate new maze after generateMazeButton is clicked
-    public void generateMaze() {
+    public void generateMaze(String level) {
         int col = this.window.getInputWidth();
         int row = this.window.getInputHeight();
-        this.data = new MazeData(row, col);
+        this.data = new MazeData(row, col, level);
         //System.out.println("row: " + col + ", height: " + row);
         this.window.resizeWindow(col*this.window.getBlockSize()+16, row*this.window.getBlockSize()+120+20);
         this.window.render(this.data);
 
         new Thread(() -> {
-            generateHelper();
+            generateHelper(level);
         }).start();
 
         //this.window.render(this.data);
     }
 
-    public void generateHelper() {
+    public void generateHelper(String level) {
 
         setToRoad(-1, -1);
 
-        MazeQueue<Position> queue = new OrderedQueue<>();
-        Position start = new Position(this.data.getEntranceRow(), this.data.getEntranceCol() + 1);
-        this.data.visited[start.getRow()][start.getCol()] = true;
+        //MazeQueue<Position> queue = new OrderedQueue<>();
+        //MazeQueue<Position> queue = new RandomQueueEasy<>();
+        MazeQueue<Position> queue = setupQueue(level);
+        Position start = setupStart(level);
 
+        this.data.visited[start.getRow()][start.getCol()] = true;
         queue.add(start);
 
         while (!queue.isEmpty()) {
@@ -100,6 +110,24 @@ public class MazeVisualizer {
         this.window.render((this.data));
         MazeVisHelper.pause(DELAY);
 
+    }
+
+    //determine which MazeQueue to use based on difficulty level
+    public MazeQueue<Position> setupQueue(String level) {
+        if (level.equals("Easy")) {
+            return new RandomQueueEasy<Position>();
+        } else {
+            return new RandomQueueHard<Position>();
+        }
+    }
+
+    //determine starting point based on difficulty level
+    public Position setupStart(String level) {
+        if (level.equals("Easy")) {
+            return new Position(this.data.getEntranceRow(), this.data.getEntranceCol() + 1);
+        } else {
+            return new Position(this.data.getEntranceRow(), this.data.getEntranceCol());
+        }
     }
 
 }
