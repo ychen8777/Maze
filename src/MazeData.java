@@ -11,6 +11,8 @@ public class MazeData {
     private int entranceRow, entranceCol;
     private int exitRow, exitCol;
 
+    private Player player;
+
     public MazeData(int m, int n, String level) {
 
         if (m % 2 == 0 || n % 2 == 0) {
@@ -61,6 +63,8 @@ public class MazeData {
 
         maze[entranceRow][entranceCol] = ROAD;
         maze[exitRow][exitCol] = ROAD;
+
+        this.player = new Player(new Position(entranceRow, entranceCol));
     }
 
     public MazeData(int m, int n) {
@@ -93,5 +97,9 @@ public class MazeData {
 
     public int getExitCol() {
         return exitCol;
+    }
+
+    public Player getPlayer() {
+        return this.player;
     }
 }
