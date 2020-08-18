@@ -1,9 +1,13 @@
 import javax.swing.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 public class MazeVisualizer {
 
     private MazeData data;
     private MazeFrame window;
+    private PlayerControl playerControl;
 
     private int[][] direction = {{-1,0}, {0, 1}, {1, 0}, {0,-1}};
     private static int DELAY = 5;
@@ -25,6 +29,9 @@ public class MazeVisualizer {
         this.BFSButton = this.window.getBSFButton();
         this.levelBox = this.window.getLevelBox();
         this.mapBox = this.window.getMapBox();
+
+        this.window.addKeyListener(new MazeKeyListener());
+
     }
 
     public MazeData getData() {
@@ -59,6 +66,10 @@ public class MazeVisualizer {
         new Thread(() -> {
             generateHelper(level);
         }).start();
+
+        // link player with playerControl
+        this.playerControl = new PlayerControl(this.data);
+        this.window.requestFocus();
 
         //this.window.render(this.data);
     }
@@ -101,6 +112,29 @@ public class MazeVisualizer {
         setToRoad(-1, -1);
     }
 
+    private class MazeKeyListener extends KeyAdapter {
+        @Override
+        public void keyPressed(KeyEvent event) {
+            //System.out.println("key detected");
+            int keyCode = event.getKeyCode();
+            switch (keyCode) {
+                case KeyEvent.VK_UP:
+                    playerControl.moveUp();
+                    break;
+                case KeyEvent.VK_DOWN:
+                    playerControl.moveDown();
+                    break;
+                case KeyEvent.VK_LEFT:
+                    playerControl.moveLeft();
+                    break;
+                case KeyEvent.VK_RIGHT:
+                    playerControl.moveRight();
+                    break;
+            }
+            window.render(data);
+        }
+    }
+    
 
     public void setToRoad(int row, int col) {
         if (this.data.inArea(row, col)) {
