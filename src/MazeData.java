@@ -7,6 +7,7 @@ public class MazeData {
     private int m, n;
     public char[][] maze;
     public boolean[][] visited;
+    public boolean[][] inMist;
 
     private int entranceRow, entranceCol;
     private int exitRow, exitCol;
@@ -27,6 +28,7 @@ public class MazeData {
 
         this.maze = new char[m][n];
         this.visited = new boolean[m][n];
+        this.inMist = new boolean[m][n];
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -36,6 +38,7 @@ public class MazeData {
                     maze[i][j] = WALL;
                 }
                 visited[i][j] = false;
+                inMist[i][j] = true;
             }
         }
 
