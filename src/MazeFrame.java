@@ -228,7 +228,7 @@ public class MazeFrame extends JFrame {
 
             for (int i = 0; i < mazeData.getM(); i ++) {
                 for (int j = 0; j < mazeData.getN(); j ++) {
-                    if (mazeData.inMist[i][j] = true) {
+                    if (mazeData.inMist[i][j] == true) {
                         MazeVisHelper.setColor(g2d, MazeVisHelper.Grey);
                     } else {
 
