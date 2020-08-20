@@ -228,17 +228,22 @@ public class MazeFrame extends JFrame {
 
             for (int i = 0; i < mazeData.getM(); i ++) {
                 for (int j = 0; j < mazeData.getN(); j ++) {
+
                     if (mazeData.inMist[i][j] == true) {
                         MazeVisHelper.setColor(g2d, MazeVisHelper.Grey);
                     } else {
-
                         if (mazeData.maze[i][j] == MazeData.WALL) {
                             // set wall color to light blue
                             MazeVisHelper.setColor(g2d, MazeVisHelper.LightBlue);
                         } else { // set wall color to white
                             MazeVisHelper.setColor(g2d, MazeVisHelper.White);
                         }
+                        // set exit color to green
+                        if (i == mazeData.getExitRow() && j == mazeData.getExitCol()) {
+                            MazeVisHelper.setColor(g2d, MazeVisHelper.Green);
+                        }
                     }
+
                     if (i == mazeData.getPlayer().getPosition().getRow() && j == mazeData.getPlayer().getPosition().getCol()) {
                         MazeVisHelper.setColor(g2d, MazeVisHelper.Black);
                     }

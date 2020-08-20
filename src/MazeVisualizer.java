@@ -85,8 +85,6 @@ public class MazeVisualizer {
         Position start = setupStart(level);
         playerControl.openAround(this.data.getEntranceRow(), this.data.getEntranceCol());
 
-
-
         this.data.visited[start.getRow()][start.getCol()] = true;
         queue.add(start);
 
@@ -125,6 +123,8 @@ public class MazeVisualizer {
                 }
             }
         }
+
+        playerControl.openAround(this.data.getExitRow(), this.data.getExitCol());
 
         setToRoad(-1, -1);
     }
