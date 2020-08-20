@@ -83,6 +83,9 @@ public class MazeVisualizer {
         //MazeQueue<Position> queue = new RandomQueueEasy<>();
         MazeQueue<Position> queue = setupQueue(level);
         Position start = setupStart(level);
+        playerControl.openAround(this.data.getEntranceRow(), this.data.getEntranceCol());
+
+
 
         this.data.visited[start.getRow()][start.getCol()] = true;
         queue.add(start);

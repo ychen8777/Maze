@@ -12,6 +12,7 @@ public  class PlayerControl{
         int newCol = this.player.getPosition().getCol();
         if (mazeData.inArea(newRow, newCol) && mazeData.maze[newRow][newCol] == MazeData.ROAD) {
             this.player.moveTo(new Position(newRow, newCol));
+            openAround(newRow, newCol);
         }
     }
 
@@ -20,6 +21,7 @@ public  class PlayerControl{
         int newCol = this.player.getPosition().getCol();
         if (mazeData.inArea(newRow, newCol) && mazeData.maze[newRow][newCol] == MazeData.ROAD) {
             this.player.moveTo(new Position(newRow, newCol));
+            openAround(newRow, newCol);
         }
     }
 
@@ -28,6 +30,7 @@ public  class PlayerControl{
         int newCol = this.player.getPosition().getCol() - 1;
         if (mazeData.inArea(newRow, newCol) && mazeData.maze[newRow][newCol] == MazeData.ROAD) {
             this.player.moveTo(new Position(newRow, newCol));
+            openAround(newRow, newCol);
         }
     }
 
@@ -36,6 +39,20 @@ public  class PlayerControl{
         int newCol = this.player.getPosition().getCol() + 1;
         if (mazeData.inArea(newRow, newCol) && mazeData.maze[newRow][newCol] == MazeData.ROAD) {
             this.player.moveTo(new Position(newRow, newCol));
+            openAround(newRow, newCol);
+        }
+    }
+
+    // make surrounding area visible
+    public void openAround(int row, int col) {
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                int newRow = row + i;
+                int newCol = col + j;
+                if (this.mazeData.inArea(newRow, newCol) && this.mazeData.inMist[newRow][newCol]) {
+                    this.mazeData.inMist[newRow][newCol] = false;
+                }
+            }
         }
     }
 
