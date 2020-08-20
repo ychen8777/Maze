@@ -83,7 +83,10 @@ public class MazeFrame extends JFrame {
 //        this.add(mazeCanvas);
     }
 
-
+    public void showSuccess() {
+        String msg = "Congratulations, you got out off the maze!";
+        JOptionPane.showMessageDialog(this, msg, "Success", JOptionPane.INFORMATION_MESSAGE);
+    }
 
     public int getInputWidth() {
         return Integer.parseInt(this.mazeControl.getWidthInput());

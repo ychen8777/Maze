@@ -78,6 +78,11 @@ public class MazeData {
         return row >=0 && row < this.m && col >= 0 && col < this.n;
     }
 
+    // check if player reaches exit
+    public boolean playerFinish() {
+        return player.getPosition().getRow() == this.exitRow && player.getPosition().getCol() == this.exitCol;
+    }
+
     public int getM() {
         return m;
     }

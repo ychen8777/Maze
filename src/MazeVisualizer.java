@@ -50,6 +50,7 @@ public class MazeVisualizer {
                 String mapOption = this.window.getMapOption();
                 generateMaze(level, mapOption);
             });
+
 //        }).start();
     }
 
@@ -149,6 +150,11 @@ public class MazeVisualizer {
                     break;
             }
             window.render(data);
+
+            // if the player reaches exit, show success window
+            if (data.playerFinish()) {
+                window.showSuccess();
+            }
         }
     }
 
