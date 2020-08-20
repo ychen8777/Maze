@@ -47,7 +47,8 @@ public class MazeVisualizer {
             this.window.render(this.data);
             this.generateMazeButton.addActionListener((e) -> {
                 String level = this.window.getDifficulty();
-                generateMaze(level);
+                String mapOption = this.window.getMapOption();
+                generateMaze(level, mapOption);
             });
 //        }).start();
     }
@@ -55,7 +56,7 @@ public class MazeVisualizer {
 
 
     // to generate new maze after generateMazeButton is clicked
-    public void generateMaze(String level) {
+    public void generateMaze(String level, String mapOption) {
         int col = this.window.getInputWidth();
         int row = this.window.getInputHeight();
         this.data = new MazeData(row, col, level);
@@ -64,7 +65,7 @@ public class MazeVisualizer {
         this.window.render(this.data);
 
         new Thread(() -> {
-            generateHelper(level);
+            generateHelper(level, mapOption);
         }).start();
 
         // link player with playerControl
@@ -74,7 +75,7 @@ public class MazeVisualizer {
         //this.window.render(this.data);
     }
 
-    public void generateHelper(String level) {
+    public void generateHelper(String level, String mapOption) {
 
         setToRoad(-1, -1);
 
@@ -93,6 +94,18 @@ public class MazeVisualizer {
 //                return;
 //            }
 
+            if (mapOption == "on") {
+                for (int i = -1; i <= 1; i++) {
+                    for (int j = -1; j <= 1; j++) {
+                        int newRow = cur.getRow() + i;
+                        int newCol = cur.getCol() + j;
+                        if (this.data.inArea(newRow, newCol)) {
+                            this.data.inMist[newRow][newCol] = false;
+                        }
+                    }
+                }
+            }
+
             for (int i = 0; i < 4; i++) {
                 int newRow = cur.getRow() + this.direction[i][0] * 2;
                 int newCol = cur.getCol() + this.direction[i][1] * 2;
@@ -103,6 +116,7 @@ public class MazeVisualizer {
 
                     queue.add(new Position(newRow, newCol));
                     this.data.visited[newRow][newCol] = true;
+
                     // break the wall between cur and (newRow, newCol)
                     setToRoad(cur.getRow() + this.direction[i][0], cur.getCol() + this.direction[i][1]);
                 }
@@ -134,7 +148,7 @@ public class MazeVisualizer {
             window.render(data);
         }
     }
-    
+
 
     public void setToRoad(int row, int col) {
         if (this.data.inArea(row, col)) {
