@@ -242,6 +242,11 @@ public class MazeFrame extends JFrame {
                             MazeVisHelper.setColor(g2d, MazeVisHelper.White);
                         }
                         // set exit color to green
+                        if (i == mazeData.getEntranceRow() && j == mazeData.getEntranceCol()) {
+                            MazeVisHelper.setColor(g2d, MazeVisHelper.Yellow);
+                        }
+
+                        // set exit color to green
                         if (i == mazeData.getExitRow() && j == mazeData.getExitCol()) {
                             MazeVisHelper.setColor(g2d, MazeVisHelper.Green);
                         }
