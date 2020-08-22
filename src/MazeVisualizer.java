@@ -4,6 +4,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
+import java.util.concurrent.Delayed;
 
 public class MazeVisualizer {
 
@@ -232,7 +234,10 @@ public class MazeVisualizer {
             Position curPos = queue.remove();
             int curRow = curPos.getRow();
             int curCol = curPos.getCol();
-            setPathData(curRow, curCol, "bfs", true);
+            pathTo(curPos, 1);
+            window.render(data);
+            MazeVisHelper.pause(DELAY*6);
+            //setPathData(curRow, curCol, "bfs", true);
 
             if (curRow == data.getExitRow() && curCol == data.getExitCol()) {
                 return true;
@@ -244,24 +249,47 @@ public class MazeVisualizer {
                 if (data.inArea(newRow, newCol) &&
                         !data.BFSVisited[newRow][newCol] &&
                         data.maze[newRow][newCol] == data.ROAD) {
-                    queue.add(new Position(newRow, newCol));
+                    queue.add(new Position(newRow, newCol, curPos));
                     data.BFSVisited[newRow][newCol] = true;
                 }
             }
-            setPathData(curRow, curCol, "bfs", false);
+
+            //setPathData(curRow, curCol, "bfs", false);
+            pathTo(curPos, 0);
             return solveBFSHelp(queue);
+        }
+
+        public void pathTo(Position curPos, int adding) {
+            Stack<Position> stack = new Stack<>();
+            while(curPos != null) {
+                stack.add(curPos);
+                curPos = curPos.getPrevPos();
+            }
+            while(!stack.isEmpty()) {
+                curPos = stack.pop();
+                int curRow = curPos.getRow();
+                int curCol = curPos.getCol();
+                if (adding == 1) {
+                    setPathData(curRow, curCol, "bfs", true);
+                } else {
+                    setPathData(curRow, curCol, "bfs", false);
+                }
+            }
         }
 
 
         public void setPathData(int row, int col, String method, boolean inPath){
             if (method == "dfs") {
                 data.inDFSPath[row][col] = inPath;
+                window.render(data);
+                MazeVisHelper.pause(DELAY*2);
             } else {
                 data.inBFSPath[row][col] = inPath;
+                //window.render(data);
+                //MazeVisHelper.pause(DELAY/3);
             }
 
-            window.render(data);
-            MazeVisHelper.pause(DELAY);
+
         }
 
 
