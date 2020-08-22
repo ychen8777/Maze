@@ -83,6 +83,15 @@ public class MazeData {
         return player.getPosition().getRow() == this.exitRow && player.getPosition().getCol() == this.exitCol;
     }
 
+    // make the whole maze visible
+    public void openMaze() {
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                inMist[i][j] = false;
+            }
+        }
+    }
+
     public int getM() {
         return m;
     }
