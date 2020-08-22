@@ -45,10 +45,19 @@ public class MazeVisualizer {
     public void run() {
 //        new Thread(() -> {
             this.window.render(this.data);
+            // generate Maze
             this.generateMazeButton.addActionListener((e) -> {
                 String level = this.window.getDifficulty();
                 String mapOption = this.window.getMapOption();
                 generateMaze(level, mapOption);
+            });
+            // solve maze by DFS
+            this.DFSButton.addActionListener((e)->{
+                showMaze();
+                new Thread(()-> {
+                    new solveController(data).solveDFS(data.getEntranceRow(),data.getEntranceCol());
+                }).start();
+                this.window.requestFocus();
             });
 
 //        }).start();
@@ -130,6 +139,7 @@ public class MazeVisualizer {
         setToRoad(-1, -1);
     }
 
+    //  Listener for player control by keyboard
     private class MazeKeyListener extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent event) {
@@ -158,6 +168,56 @@ public class MazeVisualizer {
         }
     }
 
+    //
+    private class solveController{
+        private MazeData mazeData;
+
+        public solveController(MazeData data) {
+            this.mazeData = data;
+        }
+
+        public boolean solveDFS(int row, int col){
+            if (!data.inArea(row, col)) {
+                throw new IllegalArgumentException(String.format("input out of maze bound for inArea({}, {})", row, col));
+            }
+
+            data.DFSVisited[row][col] = true;
+            setPathData(row, col, "dfs", true);
+
+            if (row == data.getExitRow() && col == data.getExitCol()) {
+                return true;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int nextRow = row + direction[i][0];
+                int nextCol = col + direction[i][1];
+                if (data.inArea(nextRow,nextCol) &&
+                    !data.DFSVisited[nextRow][nextCol] &&
+                    data.maze[nextRow][nextCol] == data.ROAD) {
+                    if (solveDFS(nextRow, nextCol)) {
+                        return true;
+                    }
+                }
+            }
+
+            setPathData(row, col, "dfs", false);
+            return false;
+        }
+
+        public void setPathData(int row, int col, String method, boolean inPath){
+            if (method == "dfs") {
+                data.inDFSPath[row][col] = inPath;
+            }
+
+            window.render(data);
+            MazeVisHelper.pause(DELAY);
+        }
+
+
+
+    }
+
+
 
     public void setToRoad(int row, int col) {
         if (this.data.inArea(row, col)) {
@@ -184,6 +244,14 @@ public class MazeVisualizer {
             return new Position(this.data.getEntranceRow(), this.data.getEntranceCol() + 1);
         } else {
             return new Position(this.data.getEntranceRow(), this.data.getEntranceCol());
+        }
+    }
+
+    // make the whole maze visible
+    public void showMaze() {
+        if (this.window.getMapOption() == "off") {
+            this.mapBox.setSelectedItem("on");
+            this.data.openMaze();
         }
     }
 
