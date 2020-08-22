@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class MazeVisualizer {
 
@@ -44,21 +46,32 @@ public class MazeVisualizer {
 
     public void run() {
 //        new Thread(() -> {
-            this.window.render(this.data);
-            // generate Maze
-            this.generateMazeButton.addActionListener((e) -> {
-                String level = this.window.getDifficulty();
-                String mapOption = this.window.getMapOption();
-                generateMaze(level, mapOption);
-            });
-            // solve maze by DFS
-            this.DFSButton.addActionListener((e)->{
-                showMaze();
-                new Thread(()-> {
-                    new solveController(data).solveDFS(data.getEntranceRow(),data.getEntranceCol());
-                }).start();
-                this.window.requestFocus();
-            });
+        this.window.render(this.data);
+
+        // generate Maze
+        this.generateMazeButton.addActionListener((e) -> {
+            String level = this.window.getDifficulty();
+            String mapOption = this.window.getMapOption();
+            generateMaze(level, mapOption);
+        });
+
+        // solve maze by DFS
+        this.DFSButton.addActionListener((e)->{
+            showMaze();
+            new Thread(()-> {
+                new solveController(data).solveDFS(data.getEntranceRow(),data.getEntranceCol());
+            }).start();
+            this.window.requestFocus();
+        });
+
+        // solve maze by BFS
+        this.BFSButton.addActionListener((e)-> {
+            showMaze();
+            new Thread(()-> {
+                new solveController(data).solveBFS();
+            }).start();
+            this.window.requestFocus();
+        });
 
 //        }).start();
     }
@@ -204,9 +217,47 @@ public class MazeVisualizer {
             return false;
         }
 
+        public void solveBFS() {
+            Queue<Position> queue = new LinkedList<>();
+            queue.add(new Position(data.getEntranceRow(),data.getEntranceCol()));
+            solveBFSHelp(queue);
+        }
+
+
+        public boolean solveBFSHelp(Queue<Position> queue) {
+            if (queue.isEmpty()) {
+                return false;
+            }
+
+            Position curPos = queue.remove();
+            int curRow = curPos.getRow();
+            int curCol = curPos.getCol();
+            setPathData(curRow, curCol, "bfs", true);
+
+            if (curRow == data.getExitRow() && curCol == data.getExitCol()) {
+                return true;
+            }
+
+            for (int i = 0; i < 4; i++) {
+                int newRow = curRow + direction[i][0];
+                int newCol = curCol + direction[i][1];
+                if (data.inArea(newRow, newCol) &&
+                        !data.BFSVisited[newRow][newCol] &&
+                        data.maze[newRow][newCol] == data.ROAD) {
+                    queue.add(new Position(newRow, newCol));
+                    data.BFSVisited[newRow][newCol] = true;
+                }
+            }
+            setPathData(curRow, curCol, "bfs", false);
+            return solveBFSHelp(queue);
+        }
+
+
         public void setPathData(int row, int col, String method, boolean inPath){
             if (method == "dfs") {
                 data.inDFSPath[row][col] = inPath;
+            } else {
+                data.inBFSPath[row][col] = inPath;
             }
 
             window.render(data);

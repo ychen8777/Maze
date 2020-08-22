@@ -10,6 +10,8 @@ public class MazeData {
     public boolean[][] inMist;
     public boolean[][] DFSVisited;
     public boolean[][] inDFSPath;
+    public boolean[][] BFSVisited;
+    public boolean[][] inBFSPath;
 
 
     private int entranceRow, entranceCol;
@@ -34,6 +36,8 @@ public class MazeData {
         this.inMist = new boolean[m][n];
         this.inDFSPath = new boolean[m][n];
         this.DFSVisited = new boolean[m][n];
+        this.inBFSPath = new boolean[m][n];
+        this.BFSVisited = new boolean[m][n];
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
@@ -46,6 +50,8 @@ public class MazeData {
                 inMist[i][j] = true;
                 inDFSPath[i][j] = false;
                 DFSVisited[i][j] = false;
+                inBFSPath[i][j] = false;
+                BFSVisited[i][j] = false;
             }
         }
 

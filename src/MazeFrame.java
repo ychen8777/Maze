@@ -258,6 +258,11 @@ public class MazeFrame extends JFrame {
                         MazeVisHelper.setColor(g2d, MazeVisHelper.Yellow);
                     }
 
+                    // set BFS path to Orange
+                    if (mazeData.inBFSPath[i][j]) {
+                        MazeVisHelper.setColor(g2d, MazeVisHelper.Orange);
+                    }
+
                     // set Player to a black rectangle
                     if (i == mazeData.getPlayer().getPosition().getRow() && j == mazeData.getPlayer().getPosition().getCol()) {
                         MazeVisHelper.setColor(g2d, MazeVisHelper.Black);
