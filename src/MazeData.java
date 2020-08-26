@@ -12,6 +12,7 @@ public class MazeData {
     public boolean[][] inDFSPath;
     public boolean[][] BFSVisited;
     public boolean[][] inBFSPath;
+    public boolean[][] inWallPath;
 
 
     private int entranceRow, entranceCol;
@@ -38,20 +39,28 @@ public class MazeData {
         this.DFSVisited = new boolean[m][n];
         this.inBFSPath = new boolean[m][n];
         this.BFSVisited = new boolean[m][n];
+        this.inWallPath = new boolean[m][n];
 
         for (int i = 0; i < m; i++) {
             for (int j = 0; j < n; j++) {
-                if ( i % 2 == 1 && j % 2 == 1) {
-                    maze[i][j] = ROAD;
-                } else {
+//                if ( i % 2 == 1 && j % 2 == 1) {
+//                    maze[i][j] = ROAD;
+//                } else {
+//                    maze[i][j] = WALL;
+//                }
+                if ( i % 4 == 0 || j % 4 == 0) {
                     maze[i][j] = WALL;
+                } else {
+                    maze[i][j] = ROAD;
                 }
+
                 visited[i][j] = false;
                 inMist[i][j] = true;
                 inDFSPath[i][j] = false;
                 DFSVisited[i][j] = false;
                 inBFSPath[i][j] = false;
                 BFSVisited[i][j] = false;
+                inWallPath[i][j] = false;
             }
         }
 
@@ -62,7 +71,9 @@ public class MazeData {
         } else {
             this.entranceRow = 0;
             this.entranceCol = 0;
-            while (maze[entranceRow][entranceCol] != ROAD) {
+            while (maze[entranceRow][entranceCol] != ROAD ||
+                entranceRow % 4 != 2 ||
+                entranceCol % 4 != 2) {
                 double area = Math.random();
                 if (area < 0.45) {
                     this.entranceRow = (int) (Math.random() * m / 2);
@@ -75,6 +86,8 @@ public class MazeData {
                     this.entranceCol = (int) (Math.random() * n / 3);
                 }
             }
+            this.entranceRow--;
+            this.entranceCol--;
         }
 
         maze[entranceRow][entranceCol] = ROAD;
