@@ -4,12 +4,14 @@ import java.awt.geom.Rectangle2D;
 
 public class MazeFrame extends JFrame {
 
-    public static int blockSize = 20;
+    public static int blockSize = 10;
     private int windowHeight;
     private int windowWidth;
     private MazeControl mazeControl;
     private MazeCanvas mazeCanvas;
     private MazeData mazeData;
+    private int brickWidth;
+    private int brickHeight;
 
     public MazeFrame(String title, int windowWidth, int windowHeight) {
         super(title);
@@ -261,6 +263,11 @@ public class MazeFrame extends JFrame {
                     // set BFS path to Orange
                     if (mazeData.inBFSPath[i][j]) {
                         MazeVisHelper.setColor(g2d, MazeVisHelper.Orange);
+                    }
+
+                    // set wall follower path to Chocolate
+                    if (mazeData.inWallPath[i][j]) {
+                        MazeVisHelper.setColor(g2d, MazeVisHelper.Chocolate);
                     }
 
                     // set Player to a black rectangle
