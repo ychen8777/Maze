@@ -126,7 +126,7 @@ public class MazeFrame extends JFrame {
         return this.mazeControl.getBSFButton();
     }
 
-
+    public JButton getWallButton() {return this.mazeControl.getWallButton(); }
 
     public int getBlockSize() {
         return blockSize;
@@ -140,6 +140,7 @@ public class MazeFrame extends JFrame {
         private JButton generateMazeButton = new JButton("Generate Maze");
         private JButton DFSButton = new JButton("Solve by DFS");
         private JButton BSFButton = new JButton("Solve by BFS");
+        private JButton WallButton = new JButton("Solve by Wall Follower");
         private JLabel levelText = new JLabel("Difficulty: ");
         private JComboBox levelBox;
         private JLabel mapText = new JLabel("Open Map: ");
@@ -164,6 +165,7 @@ public class MazeFrame extends JFrame {
             control3.add(generateMazeButton);
             control3.add(DFSButton);
             control3.add(BSFButton);
+            control3.add(WallButton);
             this.add(control3);
 
             JPanel control2 = new JPanel();
@@ -215,7 +217,9 @@ public class MazeFrame extends JFrame {
             return this.BSFButton;
         }
 
-
+        public JButton getWallButton() {
+            return WallButton;
+        }
     }
 
     private class MazeCanvas extends JPanel {
