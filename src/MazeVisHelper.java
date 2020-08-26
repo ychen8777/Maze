@@ -15,6 +15,7 @@ public class MazeVisHelper {
     public static final Color BlueGrey = new Color(0x607D8B);
     public static final Color Yellow = new Color(0xFFEB3B);
     public static final Color Orange = new Color(0xFF9800);
+    public static final Color Chocolate = new Color(0xD2691E);
 
     public static void fillRectangle(Graphics2D g, int x, int y, int width, int height) {
         Rectangle2D rect = new Rectangle2D.Double(x, y, width, height);
