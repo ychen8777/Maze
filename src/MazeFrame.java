@@ -58,12 +58,12 @@ public class MazeFrame extends JFrame {
     }
 
     public void resizeWindow(int width, int height){
-        if (width <= 385 && height <= 140) {
-            this.windowWidth = 385;
+        if (width <= 410 && height <= 140) {
+            this.windowWidth = 410;
             this.windowHeight = 140;
         }
-        else if (width <= 385) {
-            this.windowWidth = 385;
+        else if (width <= 410) {
+            this.windowWidth = 410;
             this.windowHeight = height;
         } else if (height <= 140) {
             this.windowWidth = width;
@@ -159,14 +159,8 @@ public class MazeFrame extends JFrame {
             heightField.setColumns(4);
             heightField.setHorizontalAlignment(JTextField.CENTER);
             control1.add(heightField);
+            control1.add(generateMazeButton);
             this.add(control1);
-
-            JPanel control3 = new JPanel();
-            control3.add(generateMazeButton);
-            control3.add(DFSButton);
-            control3.add(BSFButton);
-            control3.add(WallButton);
-            this.add(control3);
 
             JPanel control2 = new JPanel();
             String[] levels = {"Easy", "Hard"};
@@ -175,9 +169,18 @@ public class MazeFrame extends JFrame {
             this.mapBox = new JComboBox(mapChoice);
             control2.add(levelText);
             control2.add(levelBox);
+            JLabel placeHolder = new JLabel("      ");
+            control2.add(placeHolder);
             control2.add(mapText);
             control2.add(mapBox);
             this.add(control2);
+
+            JPanel control3 = new JPanel();
+            //control3.add(generateMazeButton);
+            control3.add(DFSButton);
+            control3.add(BSFButton);
+            control3.add(WallButton);
+            this.add(control3);
 
         }
 
