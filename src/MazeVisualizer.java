@@ -20,6 +20,7 @@ public class MazeVisualizer {
     private JButton generateMazeButton;
     private JButton DFSButton;
     private JButton BFSButton;
+    private JButton wallButton;
     private JComboBox levelBox;
     private JComboBox mapBox;
 
@@ -31,6 +32,7 @@ public class MazeVisualizer {
         this.generateMazeButton = this.window.getGenerateMazeButton();
         this.DFSButton = this.window.getDFSButton();
         this.BFSButton = this.window.getBSFButton();
+        this.wallButton = this.window.getWallButton();
         this.levelBox = this.window.getLevelBox();
         this.mapBox = this.window.getMapBox();
 
@@ -71,6 +73,15 @@ public class MazeVisualizer {
             showMaze();
             new Thread(()-> {
                 new solveController(data).solveBFS();
+            }).start();
+            this.window.requestFocus();
+        });
+
+        // solve maze by wall follower
+        this.wallButton.addActionListener((e)-> {
+            showMaze();
+            new Thread(()-> {
+                new solveController(data).wallFollower(data.getEntranceRow(), data.getEntranceCol(), "right");
             }).start();
             this.window.requestFocus();
         });
