@@ -146,13 +146,16 @@ public class MazeVisualizer {
                     this.data.visited[newRow][newCol] = true;
 
                     // break the wall between cur and (newRow, newCol)
-                     int rand = (int) (Math.random() * 3) - 1;
+                    breakWall(cur.getRow(), cur.getCol(), i);
 
-                     if (this.direction[i][0] == 0) {
-                         setToRoad(cur.getRow() + this.direction[i][0] + rand, cur.getCol() + this.direction[i][1]*2);
-                     } else {
-                         setToRoad(cur.getRow() + this.direction[i][0] * 2, cur.getCol() + this.direction[i][1] + rand);
-                     }
+
+//                     int rand = (int) (Math.random() * 3) - 1;
+//
+//                     if (this.direction[i][0] == 0) {
+//                         setToRoad(cur.getRow() + this.direction[i][0] + rand, cur.getCol() + this.direction[i][1]*2);
+//                     } else {
+//                         setToRoad(cur.getRow() + this.direction[i][0] * 2, cur.getCol() + this.direction[i][1] + rand);
+//                     }
 
                 }
             }
@@ -161,6 +164,53 @@ public class MazeVisualizer {
         playerControl.openAround(this.data.getExitRow(), this.data.getExitCol());
 
         setToRoad(-1, -1);
+    }
+    
+    // break the wall between two cells
+    public void breakWall(int row, int col, int i) {
+        double numWalls = Math.random();
+        if (numWalls < 0.4) {
+            // break one cell
+            int rand = (int) (Math.random() * 3) - 1;
+
+            if (this.direction[i][0] == 0) {
+                setToRoad(row + this.direction[i][0] + rand, col + this.direction[i][1]*2);
+            } else {
+                setToRoad(row + this.direction[i][0] * 2, col + this.direction[i][1] + rand);
+            }
+        } else if (numWalls < 0.8) {
+            // break two cells
+            double rand = Math.random();
+            if (rand < 0.5) {
+                if (this.direction[i][0] == 0) {
+                    setToRoad(row + this.direction[i][0], col + this.direction[i][1]*2);
+                    setToRoad(row + this.direction[i][0]-1, col + this.direction[i][1]*2);
+                } else {
+                    setToRoad(row + this.direction[i][0] * 2, col + this.direction[i][1]);
+                    setToRoad(row + this.direction[i][0] * 2, col + this.direction[i][1]-1);
+                }
+            } else {
+                if (this.direction[i][0] == 0) {
+                    setToRoad(row + this.direction[i][0], col + this.direction[i][1]*2);
+                    setToRoad(row + this.direction[i][0]+1, col + this.direction[i][1]*2);
+                } else {
+                    setToRoad(row + this.direction[i][0] * 2, col + this.direction[i][1]);
+                    setToRoad(row + this.direction[i][0] * 2, col + this.direction[i][1] + 1);
+                }
+            }
+        } else {
+            // break all 3 cells
+            if (this.direction[i][0] == 0) {
+                setToRoad(row + this.direction[i][0]+1, col + this.direction[i][1]*2);
+                setToRoad(row + this.direction[i][0], col + this.direction[i][1]*2);
+                setToRoad(row + this.direction[i][0]-1, col + this.direction[i][1]*2);
+            } else {
+                setToRoad(row + this.direction[i][0] * 2, col + this.direction[i][1]);
+                setToRoad(row + this.direction[i][0] * 2, col + this.direction[i][1] - 1);
+                setToRoad(row + this.direction[i][0] * 2, col + this.direction[i][1] + 1);
+            }
+        }
+
     }
 
     //  Listener for player control by keyboard
