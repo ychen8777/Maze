@@ -91,7 +91,9 @@ public class MazeVisualizer {
 
         new Thread(() -> {
             generateHelper(level, mapOption);
+            //new solveController(data).wallFollower(data.getEntranceRow(), data.getEntranceCol(), "right");
         }).start();
+
 
         // link player with playerControl
         this.playerControl = new PlayerControl(this.data);
@@ -121,8 +123,8 @@ public class MazeVisualizer {
 //            }
 
             if (mapOption == "on") {
-                for (int i = -1; i <= 1; i++) {
-                    for (int j = -1; j <= 1; j++) {
+                for (int i = -2; i <= 2; i++) {
+                    for (int j = -2; j <= 2; j++) {
                         int newRow = cur.getRow() + i;
                         int newCol = cur.getCol() + j;
                         if (this.data.inArea(newRow, newCol)) {
@@ -133,8 +135,8 @@ public class MazeVisualizer {
             }
 
             for (int i = 0; i < 4; i++) {
-                int newRow = cur.getRow() + this.direction[i][0] * 2;
-                int newCol = cur.getCol() + this.direction[i][1] * 2;
+                int newRow = cur.getRow() + this.direction[i][0] * 4;
+                int newCol = cur.getCol() + this.direction[i][1] * 4;
 
                 if (this.data.inArea(newRow, newCol)
                     && !this.data.visited[newRow][newCol]
@@ -144,7 +146,14 @@ public class MazeVisualizer {
                     this.data.visited[newRow][newCol] = true;
 
                     // break the wall between cur and (newRow, newCol)
-                    setToRoad(cur.getRow() + this.direction[i][0], cur.getCol() + this.direction[i][1]);
+                     int rand = (int) (Math.random() * 3) - 1;
+
+                     if (this.direction[i][0] == 0) {
+                         setToRoad(cur.getRow() + this.direction[i][0] + rand, cur.getCol() + this.direction[i][1]*2);
+                     } else {
+                         setToRoad(cur.getRow() + this.direction[i][0] * 2, cur.getCol() + this.direction[i][1] + rand);
+                     }
+
                 }
             }
         }
@@ -278,16 +287,22 @@ public class MazeVisualizer {
         }
 
 
+
         public void setPathData(int row, int col, String method, boolean inPath){
             if (method == "dfs") {
                 data.inDFSPath[row][col] = inPath;
                 window.render(data);
                 MazeVisHelper.pause(DELAY*2);
-            } else {
+            } else if (method == "bfs") {
                 data.inBFSPath[row][col] = inPath;
                 //window.render(data);
                 //MazeVisHelper.pause(DELAY/3);
-            }
+            } else {
+                data.inWallPath[row][col] = inPath;
+                window.render(data);
+                MazeVisHelper.pause(DELAY*5);
+
+        }
 
 
         }
@@ -320,9 +335,9 @@ public class MazeVisualizer {
     //determine starting point based on difficulty level
     public Position setupStart(String level) {
         if (level.equals("Easy")) {
-            return new Position(this.data.getEntranceRow(), this.data.getEntranceCol() + 1);
+            return new Position(this.data.getEntranceRow() + 1, this.data.getEntranceCol() + 2);
         } else {
-            return new Position(this.data.getEntranceRow(), this.data.getEntranceCol());
+            return new Position(this.data.getEntranceRow() + 1, this.data.getEntranceCol() + 1);
         }
     }
 
