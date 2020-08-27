@@ -49,7 +49,7 @@ public class MazeFrame extends JFrame {
     }
 
     public MazeFrame(String title) {
-        this(title, MazeFrame.blockSize*45, 45*MazeFrame.blockSize+101);
+        this(title, MazeFrame.blockSize*49, 49*MazeFrame.blockSize+101);
     }
 
     public void render(MazeData data) {
@@ -134,9 +134,9 @@ public class MazeFrame extends JFrame {
 
     private class MazeControl extends JPanel {
         private JLabel widthLabel = new JLabel("Width: ");
-        private JTextField widthField = new JTextField("45");
+        private JTextField widthField = new JTextField("12");
         private JLabel heightLabel = new JLabel("Height:");
-        private JTextField heightField = new JTextField("45");
+        private JTextField heightField = new JTextField("12");
         private JButton generateMazeButton = new JButton("Generate Maze");
         private JButton DFSButton = new JButton("Solve by DFS");
         private JButton BSFButton = new JButton("Solve by BFS");

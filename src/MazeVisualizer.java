@@ -26,7 +26,7 @@ public class MazeVisualizer {
 
     public MazeVisualizer() {
         // default setup when running
-        this.data = new MazeData(45, 45);
+        this.data = new MazeData(49, 49);
         this.window = new MazeFrame("Maze Demo");
         this.generateMazeButton = this.window.getGenerateMazeButton();
         this.DFSButton = this.window.getDFSButton();
@@ -84,9 +84,9 @@ public class MazeVisualizer {
     public void generateMaze(String level, String mapOption) {
         int col = this.window.getInputWidth();
         int row = this.window.getInputHeight();
-        this.data = new MazeData(row, col, level);
+        this.data = new MazeData(4*row+1, 4*col+1, level);
         //System.out.println("row: " + col + ", height: " + row);
-        this.window.resizeWindow(col*this.window.getBlockSize()+16, row*this.window.getBlockSize()+120+20);
+        this.window.resizeWindow((4*col+1)*this.window.getBlockSize()+16, (4*row+1)*this.window.getBlockSize()+120+26);
         this.window.render(this.data);
 
         new Thread(() -> {
