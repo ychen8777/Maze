@@ -165,7 +165,7 @@ public class MazeVisualizer {
 
         setToRoad(-1, -1);
     }
-    
+
     // break the wall between two cells
     public void breakWall(int row, int col, int i) {
         double numWalls = Math.random();
@@ -335,7 +335,107 @@ public class MazeVisualizer {
                 }
             }
         }
+        public void wallFollower(int row, int col, String prevDirection) {
+            setPathData(row, col, "wall", true);
 
+            if (row == data.getExitRow() && col == data.getExitCol()) {
+                return;
+            }
+            if (prevDirection == "up") {
+                if (wallGoLeft(row, col)){}
+                else if (wallGoUp(row, col)) {}
+                else if (wallGoRight(row, col)) {}
+                else {
+                    wallGoDown(row, col);
+                }
+//                if (data.inArea(row, col-1) &&
+//                        data.maze[row][col-1] == data.ROAD) {
+//                    wallFollower(row, col-1, "left");
+//                } else if (data.inArea(row-1, col) &&
+//                        data.maze[row-1][col] == data.ROAD) {
+//                    wallFollower(row-1, col, "up");
+//                } else if (data.inArea(row, col+1) &&
+//                        data.maze[row][col+1] == data.ROAD) {
+//                    wallFollower(row, col+1, "right");
+//                } else {
+//                    wallFollower(row+1, col, "down");
+//                }
+            } else if (prevDirection == "right") {
+                if (wallGoUp(row, col)) {
+                } else if (wallGoRight(row, col)) {
+                } else if (wallGoDown(row, col)) {
+                } else {
+                    wallGoLeft(row, col);
+                }
+
+                //if (data.inArea(row-1, col) &&
+//                        data.maze[row-1][col] == data.ROAD) {
+//                    wallFollower(row - 1, col, "up");
+//                } else if (data.inArea(row, col+1) &&
+//                        data.maze[row][col+1] == data.ROAD) {
+//                    wallFollower(row, col + 1, "right");
+//                } else if (data.inArea(row+1, col) &&
+//                        data.maze[row+1][col] == data.ROAD) {
+//                    wallFollower(row+1, col , "down");
+//                } else {
+//                    wallFollower(row, col-1, "left");
+
+            } else if (prevDirection == "down") {
+                if (wallGoRight(row, col)) {
+                } else if (wallGoDown(row, col)) {
+                } else if (wallGoLeft(row, col)) {
+                } else {
+                    wallGoUp(row, col);
+                }
+            } else {
+                if (wallGoDown(row, col)) {
+                } else if (wallGoLeft(row, col)) {
+                } else if (wallGoUp(row, col)) {
+                } else {
+                    wallGoRight(row, col);
+                }
+            }
+        }
+
+        public boolean wallGoUp(int row, int col) {
+            if (data.inArea(row-1, col) &&
+                    data.maze[row-1][col] == data.ROAD) {
+                wallFollower(row - 1, col, "up");
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public boolean wallGoLeft(int row, int col) {
+            if (data.inArea(row, col-1) &&
+                    data.maze[row][col-1] == data.ROAD) {
+                wallFollower(row, col-1, "left");
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public boolean wallGoDown(int row, int col) {
+            if (data.inArea(row+1, col) &&
+                    data.maze[row+1][col] == data.ROAD) {
+                wallFollower(row+1, col, "down");
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        public boolean wallGoRight(int row, int col) {
+            if (data.inArea(row, col+1) &&
+                    data.maze[row][col+1] == data.ROAD) {
+                wallFollower(row, col+1, "right");
+                return true;
+            } else {
+                return false;
+            }
+        }
 
 
         public void setPathData(int row, int col, String method, boolean inPath){
@@ -352,12 +452,9 @@ public class MazeVisualizer {
                 window.render(data);
                 MazeVisHelper.pause(DELAY*5);
 
+            }
+
         }
-
-
-        }
-
-
 
     }
 
