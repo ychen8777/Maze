@@ -5,7 +5,7 @@ Maze generation and resolution in Java
 ![EasyMazeGeneration](/image/EasyOnGeneration_600.gif)
 
 ### Player control using keyboard
-![PlayerEasy](/image/PlayerEasy_1.gif)
+![PlayerEasy](/image/PlayerEasy_001.gif)
 
 ### Maze Solving by DFS
 ![DFS_Easy](/image/DFS_Easy_001.gif)
