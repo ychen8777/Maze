@@ -1,5 +1,9 @@
-# Maze
-Maze generation and resolution in Java
+# Maze generation and resolution in Java
+  - Implemented GUI with Java Swing
+  - Maze generationg using BFS
+  - Maze solving demo using DFS, BFS, and Wall Follower methods
+  - Player controllable with arrow keys from keyboard
+
 
 ### Easy Maze Generation with BFS
 ![EasyMazeGeneration](/image/EasyOnGeneration_600.gif)
@@ -25,8 +29,8 @@ Maze generation and resolution in Java
 ![DFSHard](/image/HardDFS_001.gif)
 
 ### Maze Solving by BFS
-![BFS_Easy](/image/HardBFS_001.gif)
+![BFS_Hard](/image/HardBFS_001.gif)
 
 ### Maze Solving by Wall Follower
-![WF_Easy](/image/HardWall_001.gif)
+![WF_Hard](/image/HardWall_001.gif)
 
