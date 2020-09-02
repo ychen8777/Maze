@@ -2,7 +2,7 @@
   - Implemented GUI with Java Swing
   - Maze generation using BFS
   - Maze solving demo using DFS, BFS, and Wall Follower methods
-  - Player can define size of the maze and controllable with arrow keys from keyboard
+  - Player can define size of the maze, select two difficulty levels and map options, and control with arrow keys from keyboard
 
 
 ### Easy Maze Generation with BFS
@@ -23,7 +23,7 @@
 #### When open map is "off", only area visited by the player is visible
 ![PlayerHardOff](/image/PlayerHardOff.gif)
 
-#### In easy mode, the path starts at top left and ends at top right. For difficult mode, I added more randomness of where the player starts.
+#### In easy mode, the path starts at top left and ends at bottom right. For difficult mode, I added more randomness of where the player starts.
 
 ### Maze Solving by DFS
 ![DFSHard](/image/HardDFS_001.gif)
