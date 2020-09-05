@@ -12,6 +12,8 @@ public class MazeVisualizer {
     private MazeData data;
     private MazeFrame window;
     private PlayerControl playerControl;
+    private SolveController solveController;
+
 
     private int[][] direction = {{-1,0}, {0, 1}, {1, 0}, {0,-1}};
     private static int DELAY = 5;
@@ -38,6 +40,8 @@ public class MazeVisualizer {
 
         this.window.addKeyListener(new MazeKeyListener());
 
+        this.solveController = new SolveController(this.data);
+
     }
 
     public MazeData getData() {
@@ -62,8 +66,9 @@ public class MazeVisualizer {
         // solve maze by DFS
         this.DFSButton.addActionListener((e)->{
             showMaze();
+            solveController.refreshDFS();
             new Thread(()-> {
-                new solveController(data).solveDFS(data.getEntranceRow(),data.getEntranceCol());
+                solveController.solveDFS(data.getEntranceRow(),data.getEntranceCol());
             }).start();
             this.window.requestFocus();
         });
@@ -72,7 +77,7 @@ public class MazeVisualizer {
         this.BFSButton.addActionListener((e)-> {
             showMaze();
             new Thread(()-> {
-                new solveController(data).solveBFS();
+                new SolveController(data).solveBFS();
             }).start();
             this.window.requestFocus();
         });
@@ -81,7 +86,7 @@ public class MazeVisualizer {
         this.wallButton.addActionListener((e)-> {
             showMaze();
             new Thread(()-> {
-                new solveController(data).wallFollower(data.getEntranceRow(), data.getEntranceCol(), "right");
+                new SolveController(data).wallFollower(data.getEntranceRow(), data.getEntranceCol(), "right");
             }).start();
             this.window.requestFocus();
         });
@@ -99,6 +104,7 @@ public class MazeVisualizer {
         //System.out.println("row: " + col + ", height: " + row);
         this.window.resizeWindow((4*col+1)*this.window.getBlockSize()+16, (4*row+1)*this.window.getBlockSize()+120+26);
         this.window.render(this.data);
+        this.solveController.stopAll();
 
         new Thread(() -> {
             generateHelper(level, mapOption);
@@ -254,16 +260,43 @@ public class MazeVisualizer {
     }
 
     //
-    private class solveController{
+    private class SolveController{
         private MazeData mazeData;
+        private boolean DFSSwitch;
+        private boolean BFSSwitch;
+        private boolean wallSwitch;
 
-        public solveController(MazeData data) {
+        public SolveController(MazeData data) {
             this.mazeData = data;
+        }
+
+        public void setMazeData(MazeData data) {
+            this.mazeData=data;
+        }
+
+        public void stopAll() {
+            this.DFSSwitch = false;
+            this.BFSSwitch = false;
+            this.wallSwitch = false;
+        }
+
+        public void refreshDFS() {
+            this.DFSSwitch = true;
+        }
+
+        public void refreshAll() {
+            this.DFSSwitch = true;
+            this.BFSSwitch = true;
+            this.wallSwitch = true;
         }
 
         public boolean solveDFS(int row, int col){
             if (!data.inArea(row, col)) {
                 throw new IllegalArgumentException(String.format("input out of maze bound for inArea({}, {})", row, col));
+            }
+
+            if (!this.DFSSwitch) {
+                return false;
             }
 
             data.DFSVisited[row][col] = true;
