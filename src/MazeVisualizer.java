@@ -76,8 +76,9 @@ public class MazeVisualizer {
         // solve maze by BFS
         this.BFSButton.addActionListener((e)-> {
             showMaze();
+            solveController.refreshBFS();
             new Thread(()-> {
-                new SolveController(data).solveBFS();
+                solveController.solveBFS();
             }).start();
             this.window.requestFocus();
         });
@@ -85,8 +86,9 @@ public class MazeVisualizer {
         // solve maze by wall follower
         this.wallButton.addActionListener((e)-> {
             showMaze();
+            solveController.refreshWall();
             new Thread(()-> {
-                new SolveController(data).wallFollower(data.getEntranceRow(), data.getEntranceCol(), "right");
+                solveController.wallFollower(data.getEntranceRow(), data.getEntranceCol(), "right");
             }).start();
             this.window.requestFocus();
         });
@@ -284,6 +286,14 @@ public class MazeVisualizer {
             this.DFSSwitch = true;
         }
 
+        public void refreshBFS() {
+            this.BFSSwitch = true;
+        }
+
+        public void refreshWall() {
+            this.wallSwitch = true;
+        }
+
         public void refreshAll() {
             this.DFSSwitch = true;
             this.BFSSwitch = true;
@@ -330,7 +340,7 @@ public class MazeVisualizer {
 
 
         public boolean solveBFSHelp(Queue<Position> queue) {
-            if (queue.isEmpty()) {
+            if (queue.isEmpty() || !this.BFSSwitch) {
                 return false;
             }
 
@@ -381,6 +391,10 @@ public class MazeVisualizer {
         }
         public void wallFollower(int row, int col, String prevDirection) {
             setPathData(row, col, "wall", true);
+
+            if (!wallSwitch) {
+                return;
+            }
 
             if (row == data.getExitRow() && col == data.getExitCol()) {
                 return;
